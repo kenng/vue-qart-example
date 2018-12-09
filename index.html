@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="vue-qart.js"></script>
+    <title>Vue QRCode</title>
+</head>
+<body>
+    <h3> QR Code generation </h3>
+    <hr>
+    <div id="app">
+        <vue-qart :config="config"></vue-qart>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            props: {},
+            components: {
+                'vue-qart': window.VueQArt.default
+            },
+            mixins: [],
+            data: function () {
+                return {
+                    config: {
+                        value: 'https://www.itwonders-web.com',
+                        imagePath: 'itwonders-logo.jpg',
+                        filter: 'color'
+                    }
+                };
+            },
+            watch: {},
+            computed: {},
+            methods: {},
+            created: function () {},
+            beforeDestroy: function () {},
+            mounted: function () {},
+        })
+        
+    </script>
+    </script>
+</body>
+</html>
