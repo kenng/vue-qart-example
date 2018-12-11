@@ -16,14 +16,57 @@
 
 <body>
   <div id="app">
+    <v-app id="inspire">
+      <v-content>
+        <v-stepper v-model="stepper">
+          <v-stepper-header>
+            <div class="step" v-for="(step, index) in steps" :key=index>
+              <v-stepper-step :edit-icon="'check'" :complete-icon="'edit'" :step="index + 1" :complete="(index + 1 ) <= stepper"
+                              :editable="(index + 1) < stepper">{{ step.label }}</v-stepper-step>
+              <v-divider></v-divider>
+            </div>
+          </v-stepper-header>
+          <v-stepper-items>
+            <v-stepper-content step="1">
+              <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn flat @click="goBack">Back</v-btn>
+                <v-btn color="primary" @click="goForward">Continue</v-btn>
+              </v-card-actions>
+            </v-stepper-content>
+            <v-stepper-content step="2">
+              <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn flat @click="goBack">Back</v-btn>
+                <v-btn color="primary" @click="goForward">Continue</v-btn>
+              </v-card-actions>
+            </v-stepper-content>
+            <v-stepper-content step="3">
+              <v-card color="grey lighten-1" class="mb-5" height="200px"></v-card>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn flat @click="goBack">Back</v-btn>
+                <v-btn color="primary" @click="goForward">Continue</v-btn>
+              </v-card-actions>
+            </v-stepper-content>
+          </v-stepper-items>
+        </v-stepper>
+      </v-content>
+    </v-app>
   </div>
   <script>
 
 
     const store = new Vuex.Store({
         state: {
+            stepper: 1
         },
         mutations: {
+            setStepper (state, val) {
+                state.stepper = val
+            }
         }
     })
 
@@ -31,9 +74,14 @@
         after: (from, to) => {
             console.log("from")
             console.dir(from)
+            // console.log("to")
+            // console.dir(to)
+            let step = from.query.step || 1
+            store.commit('setStepper', step)
         }
       }
-    const router = new window.VueRouter({})
+    const router = new window.VueRouter({
+    })
     router.afterEach(routerAfter.after)
 
     new Vue({
@@ -41,10 +89,49 @@
       router,
       store,
       data: () => ({
+        curStep: 1,
+        steps: [{
+          label: 'Basic Info',
+          completed: false,
+        }, {
+          label: 'Login Details',
+          completed: false,
+        }, {
+          label: 'Create Project',
+          completed: false,
+        }, ],
       }),
       computed: {
+          stepper: function() {
+              return this.$store.state.stepper
+          }
       },
       methods: {
+          goBack: function() {
+              this.curStep--;
+              if (this.curStep < 0) this.curStep = 3
+                //   this.stepper = this.curStep
+                this.$router.push({path: '',  query: {step:this.curStep}})
+                this.$store.commit('setStepper', this.curStep)
+          },
+          goForward: function() {
+              this.curStep++;
+              if (this.curStep >= 4) this.curStep = 1
+            //   this.stepper = this.curStep
+            //   let url = window.location.protocol + "//"  + window.location
+            //   console.log("url")
+            //   console.log(url)
+              this.$store.commit('setStepper', this.curStep)
+              this.$router.push({path: '',  query: {step:this.curStep} 
+                // (location) => {
+                //     debugger
+                //     this.stepper = location.query.step
+                })
+          },
+          mounted: function() {
+            debugger
+            this.$router.push({path: '',  query: {step:this.curStep}})
+          }
       }
     })
 
