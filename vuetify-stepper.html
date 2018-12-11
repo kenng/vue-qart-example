@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons' rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vuex/3.0.1/vuex.js"></script>
+  <title>Vuetify</title>
+</head>
+
+<body>
+  <div id="app">
+  </div>
+  <script>
+
+
+    const store = new Vuex.Store({
+        state: {
+        },
+        mutations: {
+        }
+    })
+
+    let routerAfter = {
+        after: (from, to) => {
+            console.log("from")
+            console.dir(from)
+        }
+      }
+    const router = new window.VueRouter({})
+    router.afterEach(routerAfter.after)
+
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      data: () => ({
+      }),
+      computed: {
+      },
+      methods: {
+      }
+    })
+
+  </script>
+</body>
+
+</html>
